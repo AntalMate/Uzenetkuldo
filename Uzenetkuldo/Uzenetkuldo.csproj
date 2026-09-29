@@ -107,7 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Database\uzenetkuldo.sql" />
-    <Content Include="UzenetServices.svc" />
+    <Content Include="UzenetkuldoService.svc" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -115,10 +115,10 @@
     <Compile Include="Models\Uzenet.cs" />
     <Compile Include="Models\Tablazat.cs" />
     <Compile Include="Services\UzenetService.cs" />
-    <Compile Include="UzenetServices.svc.cs">
-      <DependentUpon>UzenetServices.svc</DependentUpon>
+    <Compile Include="UzenetkuldoService.svc.cs">
+      <DependentUpon>UzenetkuldoService.svc</DependentUpon>
     </Compile>
-    <Compile Include="IUzenetService.cs" />
+    <Compile Include="IUzenetkuldoService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
