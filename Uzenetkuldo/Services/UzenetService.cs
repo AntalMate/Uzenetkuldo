@@ -22,15 +22,23 @@ namespace Uzenetkuldo.Services
                 MySqlConnection conn = new MySqlConnection();
                 conn.ConnectionString = connectionString;
                 conn.Open();
-                string sql = "INSERT INTO uzenet(Szoveg, KüldesiIdo, UzenetTipus, Telefon, Email) VALUES (@szoveg,@küldesiIdo,@uzenettipus,@telefon,@email)";
+                string sql = "INSERT INTO uzenet(Szoveg, KüldesiIdo, UzenetTipus, Telefon, Email) VALUES (@szoveg,@kuldesiido,@uzenettipus,@telefon,@email)";
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.CommandText = sql;
                 cmd.Connection = conn;
                 cmd.Parameters.AddWithValue("@szoveg", (tablazat as Uzenet).Szoveg);
                 cmd.Parameters.AddWithValue("@kuldesiido", (tablazat as Uzenet).KuldesiIdo);
                 cmd.Parameters.AddWithValue("@uzenettipus", (tablazat as Uzenet).UzenetTipus);
-                cmd.Parameters.AddWithValue("@telefon", (tablazat as Uzenet).Telefon);
-                cmd.Parameters.AddWithValue("@email", (tablazat as Uzenet).Email);
+                if ((tablazat as Uzenet).UzenetTipus == "SMS")
+                {
+                    cmd.Parameters.AddWithValue("@email", null);
+                    cmd.Parameters.AddWithValue("@telefon", (tablazat as Uzenet).Telefon);
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@telefon", null);
+                    cmd.Parameters.AddWithValue("@email", (tablazat as Uzenet).Email);
+                }
                 int sorokSzama = cmd.ExecuteNonQuery();
                 conn.Close();
 
@@ -87,8 +95,14 @@ namespace Uzenetkuldo.Services
                     uzenet.Szoveg = reader.GetString("Szoveg");
                     uzenet.KuldesiIdo = reader.GetDateTime("KüldesiIdo");
                     uzenet.UzenetTipus = reader.GetString("UzenetTipus");
+                if (uzenet.UzenetTipus == "SMS")
+                {
                     uzenet.Telefon = reader.GetString("Telefon");
-                    uzenet.Email= reader.GetString("Email");
+                }
+                else
+                {
+                    uzenet.Email = reader.GetString("Email");
+                }
                     tablazatok.Add(uzenet);
                 }
                 conn.Close();
@@ -136,8 +150,16 @@ namespace Uzenetkuldo.Services
             cmd.Parameters.AddWithValue("@szoveg", (tablazat as Uzenet).Szoveg);
             cmd.Parameters.AddWithValue("@kuldesiido", (tablazat as Uzenet).KuldesiIdo);
             cmd.Parameters.AddWithValue("@uzenettipus", (tablazat as Uzenet).UzenetTipus);
-            cmd.Parameters.AddWithValue("@telefon", (tablazat as Uzenet).Telefon);
-            cmd.Parameters.AddWithValue("@email", (tablazat as Uzenet).Email);
+            if ((tablazat as Uzenet).UzenetTipus == "SMS")
+            {
+                cmd.Parameters.AddWithValue("@email", null);
+                cmd.Parameters.AddWithValue("@telefon", (tablazat as Uzenet).Telefon);
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@telefon", null);
+                cmd.Parameters.AddWithValue("@email", (tablazat as Uzenet).Email);
+            }
             cmd.Parameters.AddWithValue("@id", (tablazat as Uzenet).Id);
             int sorokSzama = cmd.ExecuteNonQuery();
             conn.Close();
