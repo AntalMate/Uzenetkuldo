@@ -51,7 +51,7 @@ namespace Uzenetkuldo.Services
             MySqlConnection conn = new MySqlConnection();
             conn.ConnectionString = connectionString;
             conn.Open();
-            string sql = "DELETE FROM eloado WHERE Id=@id";
+            string sql = "DELETE FROM uzenet WHERE Id=@id";
             MySqlCommand cmd = new MySqlCommand();
             cmd.CommandText = sql;
             cmd.Connection = conn;
@@ -74,7 +74,7 @@ namespace Uzenetkuldo.Services
                 MySqlConnection conn = new MySqlConnection();
                 conn.ConnectionString = connectionString;
                 conn.Open();
-                string sql = "SELECT * FROM eloado";
+                string sql = "SELECT * FROM uzenet";
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.CommandText = sql;
                 cmd.Connection = conn;
@@ -82,12 +82,14 @@ namespace Uzenetkuldo.Services
                 while (reader.Read())
                 {
                     //A beolvasott adatok feldolgozása
-                    Uzenet eloado = new Uzenet();
-                    eloado.Id = reader.GetInt32("Id");
-                    eloado.Nev = reader.GetString("Nev");
-                    eloado.Nemzetiseg = reader.GetString("Nemzetiseg");
-                    eloado.Szolo = reader.GetBoolean("Szolo");
-                    tablazatok.Add(eloado);
+                    Uzenet uzenet = new Uzenet();
+                    uzenet.Id = reader.GetInt32("Id");
+                    uzenet.Szoveg = reader.GetString("Szoveg");
+                    uzenet.KuldesiIdo = reader.GetDateTime("KüldesiIdo");
+                    uzenet.UzenetTipus = reader.GetString("UzenetTipus");
+                    uzenet.Telefon = reader.GetString("Telefon");
+                    uzenet.Email= reader.GetString("Email");
+                    tablazatok.Add(uzenet);
                 }
                 conn.Close();
 
@@ -106,7 +108,7 @@ namespace Uzenetkuldo.Services
             MySqlConnection conn = new MySqlConnection();
             conn.ConnectionString = connectionString;
             conn.Open();
-            string sql = "SELECT Id FROM eloado WHERE Id=@id";
+            string sql = "SELECT Id FROM uzenet WHERE Id=@id";
             MySqlCommand cmd = new MySqlCommand();
             cmd.CommandText = sql;
             cmd.Connection = conn;
@@ -127,7 +129,7 @@ namespace Uzenetkuldo.Services
             MySqlConnection conn = new MySqlConnection();
             conn.ConnectionString = connectionString;
             conn.Open();
-            string sql = "UPDATE eloado SET Nev=@nev, Nemzetiseg=@nemzetiseg, Szolo=@szolo WHERE Id=@id";
+            string sql = "UPDATE uzenet SET Nev=@nev, Nemzetiseg=@nemzetiseg, Szolo=@szolo WHERE Id=@id";
             MySqlCommand cmd = new MySqlCommand();
             cmd.CommandText = sql;
             cmd.Connection = conn;
