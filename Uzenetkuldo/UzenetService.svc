@@ -1,1 +1,0 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="Uzenetkuldo.UzenetService" CodeBehind="UzenetService.svc.cs" %>
